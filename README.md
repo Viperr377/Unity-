@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation; // фиксируем вращение кубика
 
-        // Считаем, сколько шариков на сцене
         totalCollectibles = GameObject.FindGameObjectsWithTag("Collectible").Length;
     }
 
@@ -46,10 +45,8 @@ public class PlayerController : MonoBehaviour
         Vector3 move = forward * moveZ + right * moveX;
         Vector3 moveVelocity = move * speed;
 
-        // Сохраняем вертикальную скорость (гравитация)
         rb.linearVelocity = new Vector3(moveVelocity.x, rb.linearVelocity.y, moveVelocity.z);
 
-        // Поворачиваем кубик в сторону движения
         if (move != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 0.1f);
@@ -67,7 +64,6 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        // Проверка земли через Raycast
         return Physics.Raycast(transform.position, Vector3.down, 0.6f);
     }
 
@@ -81,7 +77,6 @@ public class PlayerController : MonoBehaviour
             if (totalCollectibles <= 0)
             {
                 Debug.Log("Alle ballen zijn verzameld");
-                // Можно добавить переход на экран победы или перезагрузку сцены
                 // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
